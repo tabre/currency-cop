@@ -34,6 +34,7 @@
   transform: scale(1, 0);
   transition: transform ease .2s;
   left: -15px;
+  z-index: 2;
 }
 .dropdown-container > .dropdown-list > div {
   position: absolute;
