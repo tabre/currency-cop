@@ -47,6 +47,20 @@ export function getPercentageChange(a, b) {
   }
 }
 
+export function getTimeframeData(data, timeframe) {
+  let now = new Date();
+  let startTime = new Date(now - (timeframe * 60000));
+
+  let x = data.map(i => new Date(i.createdAt)).filter((i: any) => {
+    return i >= startTime;
+  });
+
+  let y = data.map(i => i.total)
+  y = y.slice(y.length - x.length);
+
+  return {x: x, y: y};
+}
+
 import { shell } from 'electron'
 export function GoToUrl(url, event) {
   if (url && url.preventDefault && !url.target.href) {
