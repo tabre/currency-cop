@@ -48,21 +48,20 @@ export function getPercentageChange(a, b) {
 }
 
 export function getTimeframeData(data, timeframe) {
-  if (timeframe == 'league'){
-    return data
-  } else {
+
+  let x = data.map(i => new Date(i.createdAt));
+  let y = data.map(i => i.total);
+
+  if (timeframe !== 'league') {
     let now = new Date();
     let startTime = new Date(now - (timeframe * 60000));
 
-    let x = data.map(i => new Date(i.createdAt)).filter((i: any) => {
-      return i >= startTime;
-    });
-
-    let y = data.map(i => i.total)
+    x = x.filter((i: any) => {return i >= startTime;});
     y = y.slice(y.length - x.length);
 
-    return {x: x, y: y};
   };
+  
+  return {x: x, y: y};
 }
 
 import { shell } from 'electron'
