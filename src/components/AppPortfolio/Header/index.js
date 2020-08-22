@@ -6,6 +6,16 @@ import HeaderChart from './Chart'
 import HeaderLargeStats from './Stats'
 
 class PortfolioHeader extends React.Component {
+
+  constructor (props) {
+    super(props);
+    this.getSelectedTimeframe = this.getSelectedTimeframe.bind(this);
+
+    this.state = {
+      selectedTimeframe: 60
+    };
+  }
+
   render () {
     return (
       <div className="portfolio-header">
@@ -19,16 +29,22 @@ class PortfolioHeader extends React.Component {
           history={this.props.data}
           league={this.props.league}
           lastChecked={this.props.lastChecked}
-          lastUpdated={this.props.lastUpdated} />
+          lastUpdated={this.props.lastUpdated}
+          getSelectedTimeframe={this.getSelectedTimeframe}/>
 
         <HeaderLargeStats
           holdings={this.props.holdings}
           profit={this.props.change} />
 
         <HeaderChart
-          data={this.props.data} />
+          data={this.props.data}
+          timeframe={this.state.selectedTimeframe}/>
       </div>
     )
+  }
+
+  getSelectedTimeframe = (timeframe) => {
+    this.setState({selectedTimeframe: timeframe });
   }
 
   edit () {

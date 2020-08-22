@@ -9,8 +9,7 @@ class HeaderChart extends React.Component {
   }
 
   render () {
-    let timeframe = 180
-    let data = getTimeframeData(this.props.data, timeframe)
+    let data = getTimeframeData(this.props.data, this.props.timeframe)
 
     let layout =  {
       autosize: true,
