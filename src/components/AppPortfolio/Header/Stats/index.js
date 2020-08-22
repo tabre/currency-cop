@@ -15,6 +15,11 @@ class HeaderLargeStats extends React.Component {
           <h2>Last Gain / Loss</h2>
         </div>
 
+        <div className={`${this.props.profit.directionClassName}`}>
+          <h3>{this.props.rate} C/hr</h3>
+          <h2>Efficiency</h2>
+        </div>
+
         {/* <div>
           <h3>{this.props.dayProfit} {this.props.currency}</h3>
           <h2>24H Gain / Loss</h2>

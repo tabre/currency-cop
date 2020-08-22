@@ -47,23 +47,6 @@ export function getPercentageChange(a, b) {
   }
 }
 
-export function getTimeframeData(data, timeframe) {
-
-  let x = data.map(i => new Date(i.createdAt));
-  let y = data.map(i => i.total);
-
-  if (timeframe !== 'league') {
-    let now = new Date();
-    let startTime = new Date(now - (timeframe * 60000));
-
-    x = x.filter((i: any) => {return i >= startTime;});
-    y = y.slice(y.length - x.length);
-
-  };
-  
-  return {x: x, y: y};
-}
-
 import { shell } from 'electron'
 export function GoToUrl(url, event) {
   if (url && url.preventDefault && !url.target.href) {
