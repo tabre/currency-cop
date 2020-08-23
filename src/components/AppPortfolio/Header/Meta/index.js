@@ -43,7 +43,7 @@ class HeaderMeta extends React.Component {
 
         dropdownContent: (
           <div className="dropdown-item">
-            <span className="total"><br />{item.label}</span>
+            <span className="label"><br />{item.label}</span>
           </div>
         )
       }

@@ -1,0 +1,10 @@
+.dropdown-container > .dropdown-list > div > div.selected .label {
+  color: white;
+}
+
+.dropdown-item .label {
+  color: #888;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+}
