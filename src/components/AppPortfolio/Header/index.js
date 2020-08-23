@@ -78,7 +78,7 @@ class PortfolioHeader extends React.Component {
     let cStart = 0;
     let cEnd = 0;
 
-    if (data.x.length > 0) {
+    if (data.x.length > 1) {
       tStart = data.x[0];
       tEnd = data.x[data.x.length - 1];
       cStart = data.y[0];
