@@ -24,8 +24,8 @@ class HeaderMeta extends React.Component {
   getTimeframeList () {
 
     let list = [
-      {label: "1 hour", value: 60},
-      {label: "12 hours", value: 720},
+      {label: "1 hr", value: 60},
+      {label: "12 hr", value: 720},
       {label: "1 day", value: 1440},
       {label: "1 week", value: 10080},
       {label: "1 month", value: 43200},
