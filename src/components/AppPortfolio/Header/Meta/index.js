@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import * as Helpers from '@/helpers'
-import HistoryDropdown from './HistoryDropdown'
 import TimeframeDropdown from './TimeframeDropdown'
 import moment from 'moment-shortformat'
 import './index.css'
@@ -11,10 +10,6 @@ class HeaderMeta extends React.Component {
     return (
       <div className="portfolio-meta">
         <div className="portfolio-meta-league">{ this.props.league }</div>
-
-        <HistoryDropdown
-          list={this.getHistoryList()}
-          selected={0} />
 
         <TimeframeDropdown
           list={this.getTimeframeList()}
@@ -55,30 +50,30 @@ class HeaderMeta extends React.Component {
     })
   }
 
-  getHistoryList () {
-    if (!this.props.history || !this.props.history.length) {
-      return []
-    }
-
-    let list = this.props.history.map(item => item)
-    return list.reverse().splice(0, 5).map((item, index) => {
-      return {
-        index,
-        createdAt: item.createdAt,
-
-        displayContent: (
-          <span>Portfolio History</span>
-        ),
-
-        dropdownContent: (
-          <div className="dropdown-item">
-            <span className="total">{ Helpers.formatNumber(item.total) } C</span>
-            <span className="time"><br />{ moment(item.createdAt).format('MM/DD/YY hh:mm A') }</span>
-          </div>
-        )
-      }
-    })
-  }
+  // getHistoryList () {
+  //   if (!this.props.history || !this.props.history.length) {
+  //     return []
+  //   }
+  //
+  //   let list = this.props.history.map(item => item)
+  //   return list.reverse().splice(0, 5).map((item, index) => {
+  //     return {
+  //       index,
+  //       createdAt: item.createdAt,
+  //
+  //       displayContent: (
+  //         <span>Portfolio History</span>
+  //       ),
+  //
+  //       dropdownContent: (
+  //         <div className="dropdown-item">
+  //           <span className="total">{ Helpers.formatNumber(item.total) } C</span>
+  //           <span className="time"><br />{ moment(item.createdAt).format('MM/DD/YY hh:mm A') }</span>
+  //         </div>
+  //       )
+  //     }
+  //   })
+  // }
 
 }
 
