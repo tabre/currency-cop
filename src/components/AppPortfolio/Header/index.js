@@ -12,13 +12,13 @@ class PortfolioHeader extends React.Component {
     this.getSelectedTimeframe = this.getSelectedTimeframe.bind(this);
 
     this.state = {
-      selectedTimeframe: 60
+      selectedTimeframe: {key:0, value:60}
     };
   }
 
   render () {
     this.state.timeframeData = this.getTimeframeData(
-      this.props.data, this.state.selectedTimeframe
+      this.props.data, this.state.selectedTimeframe.value
     )
 
     return (
@@ -34,6 +34,7 @@ class PortfolioHeader extends React.Component {
           league={this.props.league}
           lastChecked={this.props.lastChecked}
           lastUpdated={this.props.lastUpdated}
+          selectedTimeframe={this.state.selectedTimeframe.key}
           getSelectedTimeframe={this.getSelectedTimeframe}/>
 
         <HeaderLargeStats
@@ -48,7 +49,7 @@ class PortfolioHeader extends React.Component {
   }
 
   getSelectedTimeframe = (timeframe) => {
-    this.setState({selectedTimeframe: timeframe });
+    this.setState({selectedTimeframe: timeframe});
   }
 
   getTimeframeData(data, timeframe) {
