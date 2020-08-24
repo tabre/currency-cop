@@ -162,8 +162,8 @@ function GetInventory (cookie, options) {
         },
         params: options
       },
-      onSuccess: `STASH_TAB_RESPONSE`,
-      onError: `STASH_TAB_ERROR`
+      onSuccess: `INVENTORY_RESPONSE`,
+      onError: `INVENTORY_ERROR`
     })
 }
 
