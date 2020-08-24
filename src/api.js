@@ -152,6 +152,21 @@ function GetLeagueStashTab (cookie, options) {
   })
 }
 
+function GetInventory (cookie, options) {
+  return DoServerRequest({
+      method: 'get',
+      url: Constants.POE_INVENTORY_ITEMS_URL,
+      options: {
+        headers: {
+          'Cookie': `${Constants.POE_COOKIE_NAME}=${cookie}`
+        },
+        params: options
+      },
+      onSuccess: `STASH_TAB_RESPONSE`,
+      onError: `STASH_TAB_ERROR`
+    })
+}
+
 function GetNinjaCurrency (type, league, date) {
   return DoServerRequest({
     method: 'get',
@@ -204,6 +219,7 @@ exports.GetLeagues = GetLeagues
 exports.GetCharacters = GetCharacters
 exports.GetStashTabs = GetStashTabs
 exports.GetLeagueStashTab = GetLeagueStashTab
+exports.GetInventory = GetInventory
 exports.DoVersionCheck = DoVersionCheck
 
 // Enums

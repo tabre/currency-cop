@@ -10,6 +10,7 @@ export const POE_LOGIN_STEAM_URL                  = 'https://www.pathofexile.com
 export const POE_MY_ACCOUNT_URL                   = 'https://www.pathofexile.com/my-account'
 export const POE_GET_CHARACTERS_URL               = 'https://www.pathofexile.com/character-window/get-characters'
 export const POE_STASH_ITEMS_URL                  = `https://www.pathofexile.com/character-window/get-stash-items`
+export const POE_INVENTORY_ITEMS_URL              = `https://www.pathofexile.com/character-window/get-items`
 export const POE_LEAGUE_LIST_URL                  = 'http://api.pathofexile.com/leagues?type=main&compact=1'
 
 export const POE_COOKIE_NAME                      = 'POESESSID'
@@ -24,6 +25,6 @@ export const NINJA_CURRENCY_OVERVIEWS             = [ 'Currency', 'Fragment' ]
 export const NINJA_ITEM_OVERVIEWS                 = [ 'Map', 'Essence', 'SkillGem',
                                                       'UniqueMap', 'UniqueJewel', 'UniqueFlask',
                                                       'UniqueArmour', 'UniqueWeapon', 'UniqueAccessory',
-                                                      'Fossil', 'Resonator', 'Prophecy', 'Incubator', 
+                                                      'Fossil', 'Resonator', 'Prophecy', 'Incubator',
                                                       'Scarab', 'Oil'
                                                     ]
