@@ -123,7 +123,7 @@ class ApiClient {
       for (const entry of list.lines) {
         let name = entry.currencyTypeName || entry.name
         let fullName = name
-        
+
         if (name && entry.baseType && name.indexOf(entry.baseType) < 0) {
           fullName = `${name} ${entry.baseType}`
         }
@@ -216,7 +216,6 @@ class ApiClient {
         }))
       }
     }
-  
     return output
   }
 
@@ -247,7 +246,7 @@ class ApiClient {
     }
 
     // Not found
-    if (apiResult.status === 404) 
+    if (apiResult.status === 404)
       return items
 
     // Unauthorized
@@ -291,7 +290,7 @@ class ApiClient {
     }
 
     // Not found...
-    if (apiResult.status === 404) 
+    if (apiResult.status === 404)
       return {}
 
     // Unauthorized
@@ -302,6 +301,94 @@ class ApiClient {
     this.cache.save()
 
     return apiResult
+  }
+
+  async getInventory ({ league, character }) {
+    let cacheName = `${this.accountName}-${character}-inv`
+    let cacheResult = this.cache.get(cacheName)
+    if (cacheResult) {
+      return this._convertTabItems({
+        league,
+        character,
+        items: cacheResult
+      })
+    }
+
+    let apiResult = await Api.GetInventory(this.accountSessionId, {
+      accountName: this.accountName,
+      character
+    })
+
+    let items = []
+
+    // Rate limited, let's do a backoff
+    if (apiResult.status === 429) {
+      CC.checkRateLimitWindows(apiResult)
+      throw ({ status: 429 })
+    }
+
+    // Not found
+    if (apiResult.status === 404)
+      return items
+
+    // Unauthorized
+    if (apiResult.status === 403)
+      throw ({ status: 403 })
+
+    // Missing Data
+    if (!apiResult.data || !apiResult.data.items)
+      return items
+
+    items = apiResult.data.items
+
+    this.cache.set(cacheName, items, 60 * 4)
+    this.cache.save()
+
+    return this._convertTabItems({
+      league,
+      character,
+      items
+    })
+  }
+
+  async getCharacters() {
+    let cacheName = `${this.accountName}-characters`
+    let cacheResult = this.cache.get(cacheName)
+
+    if (cacheResult) {
+      return cacheResult
+    }
+
+    let apiResult = await Api.GetCharacters(this.accountSessionId, {
+      accountName: this.accountName
+    })
+
+    let characters = []
+    // Rate limited, let's do a backoff
+    if (apiResult.status === 429) {
+      CC.checkRateLimitWindows(apiResult)
+      throw ({ status: 429 })
+    }
+
+    // Not found
+    if (apiResult.status === 404)
+      return characters
+
+    // Unauthorized
+    if (apiResult.status === 403)
+      throw ({ status: 403 })
+
+    // Missing Data
+    if (!apiResult.data)
+      return characters
+
+    characters = apiResult.data
+
+    this.cache.set(cacheName, characters, 60 * 4)
+    this.cache.save()
+
+    return characters
+
   }
 }
 

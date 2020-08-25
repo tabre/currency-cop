@@ -280,6 +280,9 @@ class App extends React.Component {
       this.setLoadingMessage('Gathering Tabs')
       await this.getTabsForEachLeague()
 
+      this.setLoadingMessage('Gathering Characters')
+      await this.getCharacters()
+
       this.setLoadingMessage('Gathering Prices')
       await this.getPricesForEachLeague()
 
@@ -368,7 +371,7 @@ class App extends React.Component {
    * MISC
    */
 
-  
+
   doOfflineCheck () {
     if (CC.isOffline) {
       return true
@@ -487,7 +490,7 @@ class App extends React.Component {
     }
   }
 
-  
+
   getPortfolioById (id) {
     let portfolio = null
     let {portfolios} = this.state
@@ -531,7 +534,7 @@ class App extends React.Component {
       .then(() => this.refreshPortfolioTabs(portfolio))
   }
 
-  
+
   refreshPortfolioTabs (portfolio) {
     let { tabs, league } = portfolio
     let { portfolios } = this.state
@@ -559,7 +562,7 @@ class App extends React.Component {
 
     this.removePortfolioTabListeners(portfolio)
     portfolios.splice(index, 1)
-  
+
     return this.savePortfolios(portfolios)
       .then(() => this.manageTabJobs())
   }
@@ -591,6 +594,32 @@ class App extends React.Component {
     }
   }
 
+  async getCharacters() {
+    try {
+      this.setLoadingMessage(`Gathering Characters`)
+      let characters = await CC.Api.getCharacters()
+      this.handleCharacterList(characters)
+    } catch (e) {
+      CC.ApiLog.error(`Failed to fetch characters - ${e.message}`)
+      CC.exception('App.getCharacters', e, 1)
+    }
+  }
+
+  handleCharacterList(list) {
+    const { characters, leagues } = this.state
+    for (const league of leagues) {
+      let leagueCharacters = list.filter(i => i.league === league.id)
+      let current = JSON.stringify(characters || {})
+      if (current != JSON.stringify(leagueCharacters)) {
+        this.setState({
+          characters: {
+            ...this.state.characters,
+            [league.id]: leagueCharacters
+          }
+        })
+      }
+    }
+  }
 
   async getTabsForEachLeague () {
     const { leagues } = this.state
@@ -789,8 +818,8 @@ class App extends React.Component {
 
   componentWillMount () {
     this.interval = setInterval(() => {
-      this.setState({ 
-        time: Date.now() 
+      this.setState({
+        time: Date.now()
       })
     }, 60000)
 
@@ -961,11 +990,11 @@ class App extends React.Component {
       screen('/screen/offline')
       return (
         <div className="app-viewport">
-          <AppHeader 
+          <AppHeader
             newVersion={this.state.newVersion}
             upToDate={this.state.upToDate}
           />
-          <LoadingScreen 
+          <LoadingScreen
             message={this.state.isLoading}
             error={this.state.error}
           />
@@ -977,11 +1006,11 @@ class App extends React.Component {
       screen('/screen/loading')
       return (
         <div className="app-viewport">
-          <AppHeader 
+          <AppHeader
             newVersion={this.state.newVersion}
             upToDate={this.state.upToDate}
           />
-          <LoadingScreen 
+          <LoadingScreen
             message={this.state.isLoading}
             error={this.state.error}
           />
@@ -993,12 +1022,12 @@ class App extends React.Component {
       screen('/screen/login')
       return (
         <div className="app-viewport">
-          <AppHeader 
+          <AppHeader
             newVersion={this.state.newVersion}
             upToDate={this.state.upToDate}
           />
-          <LoginScreen 
-            onLogin={this.handleLogin.bind(this)} 
+          <LoginScreen
+            onLogin={this.handleLogin.bind(this)}
           />
         </div>
       )
@@ -1007,7 +1036,7 @@ class App extends React.Component {
     return (
       <div className="app-viewport">
         <div className="application">
-          <AppHeader 
+          <AppHeader
             newVersion={this.state.newVersion}
             upToDate={this.state.upToDate}
           />
