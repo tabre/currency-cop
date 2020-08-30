@@ -46,11 +46,6 @@ class HeaderChart extends React.Component {
     let config = {displayModeBar: false};
 
     return (
-      <div
-        style={{
-            width: "100%"
-        }}
-      >
         <Plot
           useResizeHandler
           style={{ width: '100%', height: '100%' }}
@@ -58,7 +53,6 @@ class HeaderChart extends React.Component {
           layout={layout}
           config={config}
         />
-      </div>
     )
   }
 
