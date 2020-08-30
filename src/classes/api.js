@@ -230,12 +230,21 @@ class ApiClient {
       })
     }
 
-    let apiResult = await Api.GetLeagueStashTab(this.accountSessionId, {
-      accountName: this.accountName,
-      league,
-      tabIndex: tab.index,
-      tabs: 0
-    })
+    let apiResult = {}
+
+    if (tab.tab_type === 'stash') {
+      apiResult = await Api.GetLeagueStashTab(this.accountSessionId, {
+        accountName: this.accountName,
+        league,
+        tabIndex: tab.index,
+        tabs: 0
+      })
+    } else if (tab.tab_type === 'inv') {
+      apiResult = await Api.GetInventory(this.accountSessionId, {
+        accountName: this.accountName,
+        character: tab.name
+      })
+    }
 
     let items = []
 
@@ -296,6 +305,24 @@ class ApiClient {
     // Unauthorized
     if (apiResult.status === 403)
       throw ({ status: 403 })
+
+    //Add tab type to all entries in tab list
+    apiResult.map(i => { i.tab_type = 'stash' })
+
+    //Get character list for league
+    let chars = this.cache.get(`${this.accountName}-characters`)
+    chars = chars.filter(i => i.league === league)
+
+    //Add id, color, and tab type to chars
+    chars.map(function (i, index) {
+      i.id = i.name + "-inv"
+      i.color=[255,255,255]
+      i.tab_type = 'inv'
+      i.index = index + apiResult.length
+    })
+
+    //Add characters to tab list
+    apiResult = apiResult.concat(chars)
 
     this.cache.set(cacheName, apiResult, 60 * 15)
     this.cache.save()

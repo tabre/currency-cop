@@ -257,6 +257,7 @@ class App extends React.Component {
 
       // Check rate-limiting
       try {
+        await CC.Api.getCharacters()
         await CC.Api.getTabsList({ league: leagues[0].id, skipCache: true })
       } catch (_) {}
 
