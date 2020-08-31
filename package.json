@@ -7,7 +7,7 @@
   "main": "main.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/currency-cop/currency-cop.git"
+    "url": "git+https://github.com/tabre/currency-cop.git"
   },
   "scripts": {
     "prod": "webpack --config webpack.build.config.js && electron --noDevServer .",

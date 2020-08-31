@@ -49,7 +49,7 @@ function DoServerRequest (options) {
 function DoVersionCheck () {
   return DoServerRequest({
     method: 'get',
-    url: `https://api.github.com/repos/currency-cop/currency-cop/releases`,
+    url: `https://api.github.com/repos/tabre/currency-cop/releases`,
     onSuccess: 'VERSION_CHECK_RESPONSE',
     onError: 'VERSION_CHECK_ERROR'
   })
